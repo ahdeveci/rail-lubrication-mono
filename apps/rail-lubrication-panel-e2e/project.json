@@ -1,0 +1,10 @@
+{
+  "name": "rail-lubrication-panel-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/rail-lubrication-panel-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["rail-lubrication-panel"],
+  "// targets": "to see all targets run: nx show project rail-lubrication-panel-e2e --web",
+  "targets": {}
+}
