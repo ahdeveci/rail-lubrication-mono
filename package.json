@@ -2,7 +2,12 @@
   "name": "@rail-lubrication-mono/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "server:dev": "nx run server:serve --configuration=development",
+    "server:prod": "nx run server:serve --configuration=production",
+    "server:build": "nx build server --configuration=production",
+    "panel:dev": "nx serve rail-lubrication-panel --configuration=development"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~19.2.0",
