@@ -62,6 +62,9 @@
           "buildTarget": "rail-lubrication-panel:build:development"
         }
       },
+      "options": {
+        "proxyConfig": "apps/rail-lubrication-panel/proxy.config.json"
+      },
       "defaultConfiguration": "development"
     },
     "extract-i18n": {
