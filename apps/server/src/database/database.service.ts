@@ -1,8 +1,21 @@
-import { DataSource } from 'typeorm';
-import { Container } from 'typedi';
+import { DataSource, Repository } from 'typeorm';
+import { Container, Service } from 'typedi';
 import { connectionOpts } from './config';
+import { Devices } from './entity/devices';
+import { DevicesController } from '../controllers/devices/devices.controller';
+import { DevicesService } from '../controllers/devices/devices.service';
 
+// Create and export the DataSource instance
 const AppDataSource = new DataSource(connectionOpts);
+
+// Create a custom repository for Devices
+@Service('device-repository')
+export class DeviceRepository extends Repository<Devices> {
+  constructor() {
+    super(Devices, AppDataSource.createEntityManager());
+  }
+}
+
 // Initialize database and register repositories
 export const initializeDatabase = async () => {
   try {
@@ -14,7 +27,11 @@ export const initializeDatabase = async () => {
     // Register the DataSource in the container
     Container.set('TYPEORM_DATASOURCE', AppDataSource);
 
-const connection = new DataSource(connectionOpts);
+    // Register the DeviceRepository
+    Container.set(
+      DevicesController,
+      new DevicesController(new DevicesService(new DeviceRepository()))
+    );
 
     return AppDataSource;
   } catch (error) {
