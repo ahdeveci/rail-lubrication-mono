@@ -1,12 +1,15 @@
 import 'reflect-metadata';
 import koa from 'koa';
+import cors from '@koa/cors';
+import bodyParser from 'koa-bodyparser';
+
 import {
   useContainer,
   useKoaServer,
   RoutingControllersOptions,
 } from 'routing-controllers';
 import { Container } from 'typedi';
-import AppDataSource from './database/database.service';
+import { initializeDatabase } from './database/database.service';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -20,23 +23,30 @@ const routingOptions: RoutingControllersOptions = {
 
 const app = new koa();
 
-useContainer(Container);
+// Set up Koa with routing-controllers
 useKoaServer(app, routingOptions);
 
-const startServer = () => {
-  app.listen(port, host, () => {
-    console.log(`[ ready ] http://${host}:${port}`);
-  });
+// Set up TypeDI container
+useContainer(Container);
+
+app.use(cors());
+app.use(bodyParser());
+
+const bootstrap = async () => {
+  try {
+    // Initialize database
+    await initializeDatabase();
+
+    // Set up Koa with routing-controllers
+    useKoaServer(app, routingOptions);
+
+    app.listen(port, host, () => {
+      console.log(`[ ready ] http://${host}:${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
 };
 
-(async () => {
-  AppDataSource.initialize()
-    .then(() => {
-      console.log('db connection success...');
-      startServer();
-    })
-    .catch((err) => {
-      console.log('error=>', err);
-      throw err;
-    });
-})();
+bootstrap().catch(console.error);
