@@ -71,11 +71,13 @@ export class DevicesController {
   }
 
   @Delete('/:id')
-  async deleteDevice(@Param('id') id: string): Promise<boolean> {
+  async deleteDevice(@Param('id') id: string): Promise<void> {
     try {
-      return await this.deviceService.deleteDevice(id);
+      await this.deviceService.deleteDevice(id);
     } catch (error) {
-      console.log('Error deleting device:', error);
+      if (error instanceof HttpError) {
+        throw error;
+      }
       throw new HttpError(500, 'Failed to delete device');
     }
   }
