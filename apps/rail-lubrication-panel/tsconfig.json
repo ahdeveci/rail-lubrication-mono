@@ -1,12 +1,22 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es2022",
+    "module": "es2022",
     "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "lib": [
+      "es2022",
+      "dom"
+    ],
   },
   "files": [],
   "include": [],
