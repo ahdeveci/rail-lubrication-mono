@@ -5,6 +5,14 @@
   "prefix": "app",
   "sourceRoot": "apps/rail-lubrication-panel/src",
   "tags": [],
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    },
+    "@schematics/angular:application": {
+      "strict": true
+    }
+  },
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -13,7 +21,7 @@
         "outputPath": "dist/apps/rail-lubrication-panel",
         "index": "apps/rail-lubrication-panel/src/index.html",
         "main": "apps/rail-lubrication-panel/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": ["@angular/localize/init", "zone.js"],
         "tsConfig": "apps/rail-lubrication-panel/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -22,7 +30,21 @@
             "input": "apps/rail-lubrication-panel/public"
           }
         ],
-        "styles": ["apps/rail-lubrication-panel/src/styles.scss"],
+        "styles": [
+          {
+            "input": "apps/rail-lubrication-panel/src/styles/styles.scss",
+            "bundleName": "styles",
+            "inject": true
+          }
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "node_modules/@coreui/coreui/scss",
+            "node_modules/@coreui/chartjs/scss",
+            "node_modules/bootstrap/scss",
+            "apps/rail-lubrication-panel/src/styles"
+          ]
+        },
         "scripts": []
       },
       "configurations": {
@@ -88,7 +110,16 @@
       "options": {
         "buildTarget": "rail-lubrication-panel:build",
         "port": 4200,
-        "spa": true
+        "spa": true,
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ],
+        "tsConfig": "tsconfig.spec.json",
+        "styles": [
+          "apps/rail-lubrication-panel/src/scss/styles.scss"
+        ],
+        "scripts": []
       }
     }
   }
