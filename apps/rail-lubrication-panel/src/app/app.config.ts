@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
@@ -9,6 +13,9 @@ import {
 } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { DropdownModule, SidebarModule } from '@coreui/angular';
+import { IconSetService } from '@coreui/icons-angular';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +33,9 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions(),
       withHashLocation()
     ),
+    importProvidersFrom(SidebarModule, DropdownModule),
+    IconSetService,
     provideHttpClient(),
+    provideAnimationsAsync(),
   ],
 };
