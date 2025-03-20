@@ -1,0 +1,3 @@
+@function shift-color($color, $amount) {
+  @return mix(white, $color, $amount);
+};

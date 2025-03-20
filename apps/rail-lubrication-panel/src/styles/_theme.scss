@@ -1,5 +1,27 @@
-@use "@coreui/coreui/scss/mixins/transition" as *;
-@use "@coreui/coreui/scss/mixins/color-mode" as *;
+
+@use "mixins" as *;
+@use "transitions" as *;
+
+// Theme colors
+$theme-colors: (
+  "primary": #321fdb,
+  "secondary": #ced2d8,
+  "success": #2eb85c,
+  "info": #39f,
+  "warning": #f9b115,
+  "danger": #e55353,
+  "light": #ebedef,
+  "dark": #636f83
+);
+
+// Theme specific styles
+.sidebar {
+  transition: padding 0.15s ease-in-out;
+}
+
+.header {
+  transition: margin-left 0.15s ease-in-out;
+}
 
 body {
   background-color: var(--cui-tertiary-bg);
